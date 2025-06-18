@@ -14,6 +14,8 @@ const MongoStore = require('connect-mongo');
 
 const clientsRoutes = require('./routes/clients');
 const projectsRoutes = require('./routes/projects');
+const tasksRoutes = require('./routes/tasks');         // ← 追加
+const employeesRoutes = require('./routes/employees'); // ← 追加
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -63,6 +65,8 @@ app.use(passport.session());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/clients', clientsRoutes);
 app.use('/projects', projectsRoutes);
+app.use('/tasks', tasksRoutes);         // ← 追加
+app.use('/employees', employeesRoutes); // ← 追加
 app.use('/auth', require('./routes/auth'));
 
 app.get('/protected', (req, res) => {
