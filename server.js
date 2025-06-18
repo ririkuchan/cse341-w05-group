@@ -8,19 +8,21 @@ const swaggerDocument = require('./swagger_output.json');
 
 const session = require('express-session');
 const passport = require('passport');
-require('./config/passport'); // パスポート設定読み込み
+require('./config/passport');
 
 const MongoStore = require('connect-mongo');
 
-const clientsRoutes = require('./routes/clients');   // ✅ 追加
-const projectsRoutes = require('./routes/projects'); // ✅ 追加
+const clientsRoutes = require('./routes/clients');
+const projectsRoutes = require('./routes/projects');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
+
+if (!port) {
+    throw new Error("❌ PORT is not defined. Make sure Render provides it.");
+}
 
 app.set('trust proxy', 1);
-
-// JSONのリクエストボディを扱えるようにする
 app.use(bodyParser.json());
 
 // === CORS対応 ===
@@ -37,14 +39,14 @@ app.use((req, res, next) => {
     next();
 });
 
-// === Session 設定 ===
+// === Session設定 ===
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URL, // ← .env のキー名が「MONGODB_URI」ならここも修正！
+            mongoUrl: process.env.MONGODB_URL,
             collectionName: 'sessions',
         }),
         cookie: {
@@ -54,23 +56,14 @@ app.use(
     })
 );
 
-// === Passport 初期化 ===
 app.use(passport.initialize());
 app.use(passport.session());
 
-// === Swagger UI ===
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// === 課題用のルーティング（今回の主役） ===
 app.use('/clients', clientsRoutes);
 app.use('/projects', projectsRoutes);
-
-// === 前のルーティング（任意） ===
-//app.use('/users', require('./routes/users'));
-//app.use('/items', require('./routes/items'));
 app.use('/auth', require('./routes/auth'));
 
-// === Renderの動作確認用ルート（/） ===
 app.get('/protected', (req, res) => {
     if (req.isAuthenticated()) {
         res.send(`Hello, ${req.user.displayName}! This is a protected route.`);
@@ -79,7 +72,7 @@ app.get('/protected', (req, res) => {
     }
 });
 
-// === MongoDB 接続後にサーバーを起動 ===
+// === MongoDB接続後にlisten ===
 mongodb.initDb((err) => {
     if (err) {
         console.error('❌ Failed to connect to database:', err);
