@@ -39,17 +39,26 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "industry",
+                "contact"
+              ],
               "properties": {
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "New Client"
                 },
                 "industry": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Technology"
                 },
                 "contact": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "contact@example.com"
                 }
               }
             }
@@ -92,13 +101,40 @@
         }
       },
       "put": {
-        "description": "",
+        "description": "Update a client",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "industry",
+                "contact"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Client"
+                },
+                "industry": {
+                  "type": "string",
+                  "example": "Finance"
+                },
+                "contact": {
+                  "type": "string",
+                  "example": "updated@example.com"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -154,20 +190,31 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "clientId",
+                "status",
+                "dueDate"
+              ],
               "properties": {
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Website Redesign"
                 },
                 "clientId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "666abc123def456789000001"
                 },
                 "status": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "In Progress"
                 },
                 "dueDate": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2025-07-15"
                 }
               }
             }
@@ -210,13 +257,45 @@
         }
       },
       "put": {
-        "description": "",
+        "description": "Update a project",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "clientId",
+                "status",
+                "dueDate"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Project"
+                },
+                "clientId": {
+                  "type": "string",
+                  "example": "666abc123def456789000001"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Completed"
+                },
+                "dueDate": {
+                  "type": "string",
+                  "example": "2025-12-01"
+                }
+              }
+            }
           }
         ],
         "responses": {
