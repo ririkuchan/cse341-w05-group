@@ -29,11 +29,16 @@ const createClient = async (req, res) => {
             industry: req.body.industry,
             contact: req.body.contact
         };
-        const result = await getDb().collection('clients').insertOne(client);
+
+        if (!client.name || !client.industry || !client.contact) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+
+        const result = await db.collection('clients').insertOne(client);
         res.status(201).json(result);
     } catch (err) {
-        console.error("❌ Error creating client:", err);  // ← これ追加して！
-        res.status(500).json({ message: "Error creating client", error: err });
+        console.error("❌ Error creating client:", err);  // ← Render 上でも確認しやすくなる
+        res.status(500).json({ message: "Error creating client", error: err.toString() });
     }
 };
 
