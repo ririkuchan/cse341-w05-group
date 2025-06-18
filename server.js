@@ -16,11 +16,11 @@ const clientsRoutes = require('./routes/clients');
 const projectsRoutes = require('./routes/projects');
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
-if (!port) {
-    throw new Error("❌ PORT is not defined. Make sure Render provides it.");
-}
+app.listen(port, () => {
+    console.log(`✅ Database is connected. Server is running on port ${port}`);
+});
 
 app.set('trust proxy', 1);
 app.use(bodyParser.json());
