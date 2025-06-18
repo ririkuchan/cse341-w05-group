@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const db = require('../data/database');
+const { getDb } = require('../data/database');
 
 const getAllClients = async (req, res) => {
     try {
@@ -12,7 +12,7 @@ const getAllClients = async (req, res) => {
 
 const getClientById = async (req, res) => {
     try {
-        const client = await db.collection('clients').findOne({ _id: new ObjectId(req.params.id) });
+        const client = await getDb().collection('clients').findOne({ _id: new ObjectId(req.params.id) });
         if (!client) {
             return res.status(404).json({ message: 'Client not found' });
         }
@@ -24,14 +24,16 @@ const getClientById = async (req, res) => {
 
 const createClient = async (req, res) => {
     try {
-        const client = req.body;
-        if (!client.name || !client.industry || !client.contact) {
-            return res.status(400).json({ message: 'Missing required fields' });
-        }
-        const result = await db.collection('clients').insertOne(client);
+        const client = {
+            name: req.body.name,
+            industry: req.body.industry,
+            contact: req.body.contact
+        };
+        const result = await getDb().collection('clients').insertOne(client);
         res.status(201).json(result);
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating client', error });
+    } catch (err) {
+        console.error("❌ Error creating client:", err);  // ← これ追加して！
+        res.status(500).json({ message: "Error creating client", error: err });
     }
 };
 
