@@ -1,8 +1,9 @@
 const { ObjectId } = require('mongodb');
-const db = require('../data/database');
+const { getDb } = require('../data/database'); // ✅ 修正ポイント
 
 const getAllProjects = async (req, res) => {
     try {
+        const db = getDb();
         const projects = await db.collection('projects').find().toArray();
         res.status(200).json(projects);
     } catch (error) {
@@ -12,6 +13,7 @@ const getAllProjects = async (req, res) => {
 
 const getProjectById = async (req, res) => {
     try {
+        const db = getDb();
         const project = await db.collection('projects').findOne({ _id: new ObjectId(req.params.id) });
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
@@ -24,11 +26,17 @@ const getProjectById = async (req, res) => {
 
 const createProject = async (req, res) => {
     try {
-        const project = req.body;
-        if (!project.title || !project.status || !project.deadline) {
+        const { name, clientId, status, dueDate } = req.body;
+        if (!name || !clientId || !status || !dueDate) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
-        const result = await db.collection('projects').insertOne(project);
+        const db = getDb();
+        const result = await db.collection('projects').insertOne({
+            name,
+            clientId,
+            status,
+            dueDate
+        });
         res.status(201).json(result);
     } catch (error) {
         res.status(500).json({ message: 'Error creating project', error });
@@ -37,8 +45,12 @@ const createProject = async (req, res) => {
 
 const updateProject = async (req, res) => {
     try {
+        const db = getDb();
         const project = req.body;
-        const result = await db.collection('projects').replaceOne({ _id: new ObjectId(req.params.id) }, project);
+        const result = await db.collection('projects').replaceOne(
+            { _id: new ObjectId(req.params.id) },
+            project
+        );
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: 'Project not found' });
         }
@@ -50,6 +62,7 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
+        const db = getDb();
         const result = await db.collection('projects').deleteOne({ _id: new ObjectId(req.params.id) });
         if (result.deletedCount === 0) {
             return res.status(404).json({ message: 'Project not found' });
