@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "CSE341 Final Project",
-    "description": "API documentation for all collections: clients, projects, tasks, employees, and auth routes",
+    "title": "CSE341 Final Project API",
+    "description": "Complete API documentation for clients, projects, tasks, employees, and OAuth routes.",
     "version": "1.0.0"
   },
   "host": "cse341-w05-group.onrender.com",
@@ -11,9 +11,9 @@
     "https"
   ],
   "paths": {
-    "/clients/": {
+    "/clients": {
       "get": {
-        "description": "Get all clients",
+        "summary": "Get all clients",
         "responses": {
           "200": {
             "description": "OK"
@@ -24,7 +24,7 @@
         }
       },
       "post": {
-        "description": "Create a new client",
+        "summary": "Create a new client",
         "parameters": [
           {
             "name": "body",
@@ -40,15 +40,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "New Client"
+                  "example": "Client Name"
                 },
                 "industry": {
                   "type": "string",
-                  "example": "Technology"
+                  "example": "Tech"
                 },
                 "contact": {
                   "type": "string",
-                  "example": "contact@example.com"
+                  "example": "email@example.com"
                 }
               }
             }
@@ -69,7 +69,7 @@
     },
     "/clients/{id}": {
       "get": {
-        "description": "Get client by ID",
+        "summary": "Get client by ID",
         "parameters": [
           {
             "name": "id",
@@ -91,7 +91,7 @@
         }
       },
       "put": {
-        "description": "Update client",
+        "summary": "Update client",
         "parameters": [
           {
             "name": "id",
@@ -113,15 +113,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "New Client"
+                  "example": "Client Name"
                 },
                 "industry": {
                   "type": "string",
-                  "example": "Technology"
+                  "example": "Tech"
                 },
                 "contact": {
                   "type": "string",
-                  "example": "contact@example.com"
+                  "example": "email@example.com"
                 }
               }
             }
@@ -143,7 +143,7 @@
         }
       },
       "delete": {
-        "description": "Delete client",
+        "summary": "Delete client",
         "parameters": [
           {
             "name": "id",
@@ -165,9 +165,9 @@
         }
       }
     },
-    "/projects/": {
+    "/projects": {
       "get": {
-        "description": "Get all projects",
+        "summary": "Get all projects",
         "responses": {
           "200": {
             "description": "OK"
@@ -178,7 +178,7 @@
         }
       },
       "post": {
-        "description": "Create a new project",
+        "summary": "Create a new project",
         "parameters": [
           {
             "name": "body",
@@ -195,15 +195,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Website Redesign"
+                  "example": "Project X"
                 },
                 "clientId": {
                   "type": "string",
-                  "example": "666abc123def456789000001"
+                  "example": "123abc"
                 },
                 "status": {
                   "type": "string",
-                  "example": "In Progress"
+                  "example": "Active"
                 },
                 "dueDate": {
                   "type": "string",
@@ -228,7 +228,7 @@
     },
     "/projects/{id}": {
       "get": {
-        "description": "Get project by ID",
+        "summary": "Get project by ID",
         "parameters": [
           {
             "name": "id",
@@ -250,7 +250,7 @@
         }
       },
       "put": {
-        "description": "Update project",
+        "summary": "Update project",
         "parameters": [
           {
             "name": "id",
@@ -273,15 +273,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Website Redesign"
+                  "example": "Project X"
                 },
                 "clientId": {
                   "type": "string",
-                  "example": "666abc123def456789000001"
+                  "example": "123abc"
                 },
                 "status": {
                   "type": "string",
-                  "example": "In Progress"
+                  "example": "Active"
                 },
                 "dueDate": {
                   "type": "string",
@@ -307,7 +307,7 @@
         }
       },
       "delete": {
-        "description": "Delete project",
+        "summary": "Delete project",
         "parameters": [
           {
             "name": "id",
@@ -329,9 +329,9 @@
         }
       }
     },
-    "/tasks/": {
+    "/tasks": {
       "get": {
-        "description": "Get all tasks",
+        "summary": "Get all tasks",
         "responses": {
           "200": {
             "description": "OK"
@@ -342,7 +342,7 @@
         }
       },
       "post": {
-        "description": "Create a new task",
+        "summary": "Create a new task",
         "parameters": [
           {
             "name": "body",
@@ -358,11 +358,11 @@
               "properties": {
                 "title": {
                   "type": "string",
-                  "example": "Design UI"
+                  "example": "Task Title"
                 },
                 "status": {
                   "type": "string",
-                  "example": "In Progress"
+                  "example": "Pending"
                 },
                 "assignedTo": {
                   "type": "string",
@@ -387,7 +387,7 @@
     },
     "/tasks/{id}": {
       "get": {
-        "description": "Get task by ID",
+        "summary": "Get task by ID",
         "parameters": [
           {
             "name": "id",
@@ -409,7 +409,7 @@
         }
       },
       "put": {
-        "description": "Update task",
+        "summary": "Update task",
         "parameters": [
           {
             "name": "id",
@@ -431,11 +431,11 @@
               "properties": {
                 "title": {
                   "type": "string",
-                  "example": "Design UI"
+                  "example": "Task Title"
                 },
                 "status": {
                   "type": "string",
-                  "example": "In Progress"
+                  "example": "Pending"
                 },
                 "assignedTo": {
                   "type": "string",
@@ -461,7 +461,7 @@
         }
       },
       "delete": {
-        "description": "Delete task",
+        "summary": "Delete task",
         "parameters": [
           {
             "name": "id",
@@ -483,9 +483,9 @@
         }
       }
     },
-    "/employees/": {
+    "/employees": {
       "get": {
-        "description": "Get all employees",
+        "summary": "Get all employees",
         "responses": {
           "200": {
             "description": "OK"
@@ -496,7 +496,7 @@
         }
       },
       "post": {
-        "description": "Create a new employee",
+        "summary": "Create a new employee",
         "parameters": [
           {
             "name": "body",
@@ -512,15 +512,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Alice"
+                  "example": "John Doe"
                 },
                 "position": {
                   "type": "string",
-                  "example": "Developer"
+                  "example": "Manager"
                 },
                 "email": {
                   "type": "string",
-                  "example": "alice@example.com"
+                  "example": "john@example.com"
                 }
               }
             }
@@ -541,7 +541,7 @@
     },
     "/employees/{id}": {
       "get": {
-        "description": "Get employee by ID",
+        "summary": "Get employee by ID",
         "parameters": [
           {
             "name": "id",
@@ -563,7 +563,7 @@
         }
       },
       "put": {
-        "description": "Update employee",
+        "summary": "Update employee",
         "parameters": [
           {
             "name": "id",
@@ -585,15 +585,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Alice"
+                  "example": "John Doe"
                 },
                 "position": {
                   "type": "string",
-                  "example": "Developer"
+                  "example": "Manager"
                 },
                 "email": {
                   "type": "string",
-                  "example": "alice@example.com"
+                  "example": "john@example.com"
                 }
               }
             }
@@ -615,7 +615,7 @@
         }
       },
       "delete": {
-        "description": "Delete employee",
+        "summary": "Delete employee",
         "parameters": [
           {
             "name": "id",
@@ -637,44 +637,60 @@
         }
       }
     },
-    "/protected": {
-      "get": {
-        "description": "Protected route",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/auth/google": {
       "get": {
-        "description": "Initiate Google OAuth",
+        "summary": "Initiate Google OAuth",
         "responses": {
-          "default": {
-            "description": ""
+          "302": {
+            "description": "Redirect to Google Login"
           }
         }
       }
     },
     "/auth/google/callback": {
       "get": {
-        "description": "Google OAuth Callback",
+        "summary": "Handle Google OAuth callback",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "User authenticated"
           }
         }
       }
     },
     "/auth/logout": {
       "get": {
-        "description": "Logout",
+        "summary": "Logout the user",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "User logged out"
           }
         }
+      }
+    },
+    "/protected": {
+      "get": {
+        "summary": "Protected route",
+        "security": [
+          {
+            "oauth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access granted to protected route"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "oauth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "flow": "implicit",
+      "scopes": {
+        "read": "Read access",
+        "write": "Write access"
       }
     }
   }
