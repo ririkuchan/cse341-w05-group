@@ -11,8 +11,12 @@ const getAllEmployees = async (req, res) => {
 };
 
 const getEmployeeById = async (req, res) => {
+    const id = req.params.id;
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+    }
     try {
-        const employee = await getDb().collection('employees').findOne({ _id: new ObjectId(req.params.id) });
+        const employee = await getDb().collection('employees').findOne({ _id: new ObjectId(id) });
         if (!employee) {
             return res.status(404).json({ message: 'Employee not found' });
         }
@@ -24,12 +28,11 @@ const getEmployeeById = async (req, res) => {
 
 const createEmployee = async (req, res) => {
     try {
-        const employee = {
-            name: req.body.name,
-            position: req.body.position,
-            email: req.body.email
-        };
-        const result = await getDb().collection('employees').insertOne(employee);
+        const { name, position, email } = req.body;
+        if (!name || !position || !email) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+        const result = await getDb().collection('employees').insertOne({ name, position, email });
         res.status(201).json(result);
     } catch (err) {
         res.status(500).json({ message: 'Error creating employee', error: err });
@@ -37,11 +40,18 @@ const createEmployee = async (req, res) => {
 };
 
 const updateEmployee = async (req, res) => {
+    const id = req.params.id;
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+    }
+    const { name, position, email } = req.body;
+    if (!name || !position || !email) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
     try {
-        const updatedEmployee = req.body;
         const result = await getDb().collection('employees').replaceOne(
-            { _id: new ObjectId(req.params.id) },
-            updatedEmployee
+            { _id: new ObjectId(id) },
+            { name, position, email }
         );
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: 'Employee not found' });

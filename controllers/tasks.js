@@ -12,12 +12,9 @@ const getAllTasks = async (req, res) => {
 
 const getTaskById = async (req, res) => {
     const id = req.params.id;
-
-    // 🔐 ObjectIdとして有効か事前にチェック
     if (!ObjectId.isValid(id)) {
-        return res.status(404).json({ message: 'Invalid task ID format' });
+        return res.status(400).json({ message: 'Invalid ID format' });
     }
-
     try {
         const task = await getDb().collection('tasks').findOne({ _id: new ObjectId(id) });
         if (!task) {
@@ -31,12 +28,11 @@ const getTaskById = async (req, res) => {
 
 const createTask = async (req, res) => {
     try {
-        const task = {
-            title: req.body.title,
-            description: req.body.description,
-            dueDate: req.body.dueDate
-        };
-        const result = await getDb().collection('tasks').insertOne(task);
+        const { title, description, dueDate } = req.body;
+        if (!title || !description || !dueDate) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+        const result = await getDb().collection('tasks').insertOne({ title, description, dueDate });
         res.status(201).json(result);
     } catch (err) {
         res.status(500).json({ message: 'Error creating task', error: err });
@@ -44,11 +40,18 @@ const createTask = async (req, res) => {
 };
 
 const updateTask = async (req, res) => {
+    const id = req.params.id;
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+    }
+    const { title, description, dueDate } = req.body;
+    if (!title || !description || !dueDate) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
     try {
-        const updatedTask = req.body;
         const result = await getDb().collection('tasks').replaceOne(
-            { _id: new ObjectId(req.params.id) },
-            updatedTask
+            { _id: new ObjectId(id) },
+            { title, description, dueDate }
         );
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: 'Task not found' });

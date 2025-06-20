@@ -1,35 +1,21 @@
-// controllers/clients.js
+// ✅ clients.js
 const { ObjectId } = require('mongodb');
 const { getDb } = require('../data/database');
 
-// Get all clients
 const getAllClients = async (req, res) => {
     try {
-        const db = getDb();
-        console.log("✅ DB instance in getAllClients:", db);
-
-        if (!db || typeof db.collection !== 'function') {
-            console.error('❌ getDb() returned invalid object:', db);
-        }
-
-        const clients = await db.collection('clients').find().toArray();
-        console.log("✅ clients fetched:", clients);
-
+        const clients = await getDb().collection('clients').find().toArray();
         res.status(200).json(clients);
     } catch (error) {
-        console.error('❌ Error in getAllClients:', error);
         res.status(500).json({ message: 'Error fetching clients', error });
     }
 };
 
-// Get client by ID
 const getClientById = async (req, res) => {
     const id = req.params.id;
-
     if (!ObjectId.isValid(id)) {
         return res.status(404).json({ message: 'Invalid client ID format' });
     }
-
     try {
         const client = await getDb().collection('clients').findOne({ _id: new ObjectId(id) });
         if (!client) {
@@ -41,34 +27,33 @@ const getClientById = async (req, res) => {
     }
 };
 
-// Create a new client
 const createClient = async (req, res) => {
     try {
-        const client = {
-            name: req.body.name,
-            industry: req.body.industry,
-            contact: req.body.contact
-        };
-
-        if (!client.name || !client.industry || !client.contact) {
-            return res.status(400).json({ message: "Missing required fields" });
+        const { name, industry, contact } = req.body;
+        if (!name || !industry || !contact) {
+            return res.status(400).json({ message: 'Missing required fields' });
         }
-
+        const client = { name, industry, contact };
         const result = await getDb().collection('clients').insertOne(client);
         res.status(201).json(result);
     } catch (err) {
-        console.error("❌ Error creating client:", err);
-        res.status(500).json({ message: "Error creating client", error: err.toString() });
+        res.status(500).json({ message: 'Error creating client', error: err });
     }
 };
 
-// Update a client by ID
 const updateClient = async (req, res) => {
+    const id = req.params.id;
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+    }
+    const { name, industry, contact } = req.body;
+    if (!name || !industry || !contact) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
     try {
-        const client = req.body;
         const result = await getDb().collection('clients').replaceOne(
-            { _id: new ObjectId(req.params.id) },
-            client
+            { _id: new ObjectId(id) },
+            { name, industry, contact }
         );
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: 'Client not found' });
@@ -79,7 +64,6 @@ const updateClient = async (req, res) => {
     }
 };
 
-// Delete a client by ID
 const deleteClient = async (req, res) => {
     try {
         const result = await getDb().collection('clients').deleteOne({ _id: new ObjectId(req.params.id) });
