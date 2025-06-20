@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "CSE341 W05 Project",
-    "description": "API documentation for clients, projects, tasks, and employees",
+    "description": "API documentation for clients, projects, tasks, employees, and authentication",
     "version": "1.0.0"
   },
   "host": "cse341-w05-group.onrender.com",
@@ -11,18 +11,25 @@
     "https"
   ],
   "paths": {
+    "/protected": {
+      "get": {
+        "description": "Protected route that requires authentication",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/clients/": {
       "get": {
         "description": "Get all clients",
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -67,9 +74,6 @@
           "400": {
             "description": "Bad Request"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -91,9 +95,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "404": {
             "description": "Not Found"
           },
@@ -103,7 +104,7 @@
         }
       },
       "put": {
-        "description": "Update client",
+        "description": "Update a client",
         "parameters": [
           {
             "name": "id",
@@ -125,15 +126,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "New Client"
+                  "example": "Updated Client"
                 },
                 "industry": {
                   "type": "string",
-                  "example": "Technology"
+                  "example": "Finance"
                 },
                 "contact": {
                   "type": "string",
-                  "example": "contact@example.com"
+                  "example": "updated@example.com"
                 }
               }
             }
@@ -155,7 +156,7 @@
         }
       },
       "delete": {
-        "description": "Delete client",
+        "description": "Delete client by ID",
         "parameters": [
           {
             "name": "id",
@@ -167,9 +168,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -186,12 +184,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -241,9 +233,6 @@
           "400": {
             "description": "Bad Request"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -264,9 +253,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -300,7 +286,7 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Website Redesign"
+                  "example": "Updated Project"
                 },
                 "clientId": {
                   "type": "string",
@@ -308,11 +294,11 @@
                 },
                 "status": {
                   "type": "string",
-                  "example": "In Progress"
+                  "example": "Completed"
                 },
                 "dueDate": {
                   "type": "string",
-                  "example": "2025-07-15"
+                  "example": "2025-12-01"
                 }
               }
             }
@@ -334,7 +320,7 @@
         }
       },
       "delete": {
-        "description": "Delete project",
+        "description": "Delete project by ID",
         "parameters": [
           {
             "name": "id",
@@ -346,9 +332,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -366,12 +349,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -388,21 +365,21 @@
               "type": "object",
               "required": [
                 "title",
-                "status",
-                "assignedTo"
+                "description",
+                "dueDate"
               ],
               "properties": {
                 "title": {
                   "type": "string",
                   "example": "Design UI"
                 },
-                "status": {
+                "description": {
                   "type": "string",
-                  "example": "In Progress"
+                  "example": "Initial phase"
                 },
-                "assignedTo": {
+                "dueDate": {
                   "type": "string",
-                  "example": "Employee ID"
+                  "example": "2025-07-15"
                 }
               }
             }
@@ -414,113 +391,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/tasks/{id}": {
-      "get": {
-        "description": "Get task by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "description": "Update task",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "title",
-                "status",
-                "assignedTo"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Design UI"
-                },
-                "status": {
-                  "type": "string",
-                  "example": "In Progress"
-                },
-                "assignedTo": {
-                  "type": "string",
-                  "example": "Employee ID"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "description": "Delete task",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -534,12 +404,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -584,115 +448,38 @@
           "400": {
             "description": "Bad Request"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       }
     },
-    "/employees/{id}": {
+    "/auth/google": {
       "get": {
-        "description": "Get employee by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "description": "Start Google OAuth flow",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "302": {
+            "description": "Redirect to Google"
           }
         }
-      },
-      "put": {
-        "description": "Update employee",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "position",
-                "email"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Alice"
-                },
-                "position": {
-                  "type": "string",
-                  "example": "Developer"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "alice@example.com"
-                }
-              }
-            }
-          }
-        ],
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "description": "Google OAuth callback",
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "302": {
+            "description": "Redirect after login"
           }
         }
-      },
-      "delete": {
-        "description": "Delete employee",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "description": "Logout and destroy session",
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+            "description": "Logged out"
           }
         }
       }
