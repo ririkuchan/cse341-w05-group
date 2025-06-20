@@ -72,7 +72,7 @@ app.get('/protected', (req, res) => {
     }
 });
 
-// === 通常起動（npm startなど）の場合のみ listen
+// ✅ テスト時でもDBを初期化
 if (require.main === module) {
     mongodb.initDb((err) => {
         if (err) {
@@ -83,13 +83,11 @@ if (require.main === module) {
             });
         }
     });
-}
-
-// === テストなどでrequireされた場合にもDB初期化（listenは不要）
-else {
+} else {
+    // Jestなどから `require()` されたときにもDB初期化
     mongodb.initDb((err) => {
         if (err) {
-            console.error('❌ Failed to initialize DB in test mode:', err);
+            console.error('❌ Test DB initialization failed:', err);
         } else {
             console.log('✅ Database initialized for testing.');
         }
