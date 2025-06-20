@@ -12,17 +12,23 @@ const getAllProjects = async (req, res) => {
 };
 
 const getProjectById = async (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+        return res.status(404).json({ message: 'Invalid project ID format' });
+    }
+
     try {
-        const db = getDb();
-        const project = await db.collection('projects').findOne({ _id: new ObjectId(req.params.id) });
+        const project = await getDb().collection('projects').findOne({ _id: new ObjectId(id) });
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
         res.status(200).json(project);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching project', error });
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching project', error: err });
     }
 };
+;
 
 const createProject = async (req, res) => {
     try {
