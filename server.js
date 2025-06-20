@@ -5,9 +5,11 @@ const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger_output.json');
+
 const session = require('express-session');
 const passport = require('passport');
 require('./config/passport');
+
 const MongoStore = require('connect-mongo');
 
 const clientsRoutes = require('./routes/clients');
@@ -18,7 +20,9 @@ const employeesRoutes = require('./routes/employees');
 const app = express();
 const port = process.env.PORT || 3001;
 
+app.set('trust proxy', 1);
 app.use(bodyParser.json());
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key');
@@ -26,13 +30,22 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL, collectionName: 'sessions' }),
-    cookie: { secure: process.env.NODE_ENV === 'production', sameSite: 'none' }
-}));
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_URL,
+            collectionName: 'sessions',
+        }),
+        cookie: {
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'none'
+        },
+    })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -55,11 +68,11 @@ if (require.main === module) {
     mongodb.initDb((err) => {
         if (err) {
             console.error('❌ Failed to connect to database:', err);
-            process.exit(1);
+        } else {
+            app.listen(port, () => {
+                console.log(`✅ Database is connected. Server is running on port ${port}`);
+            });
         }
-        app.listen(port, () => {
-            console.log(`✅ Server running on port ${port}`);
-        });
     });
 }
 

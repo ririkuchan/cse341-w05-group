@@ -1,8 +1,8 @@
 const request = require('supertest');
 const app = require('../server');
-const db = require('../data/database');
+const { initDbPromise } = require('../data/database');
 
-beforeAll(done => db.initDb(err => done(err)));
+beforeAll(() => initDbPromise());
 
 describe('Tasks API', () => {
     test('GET /tasks should return 200 and array', async () => {
