@@ -31,26 +31,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "industry",
-                "contact"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Client Name"
-                },
-                "industry": {
-                  "type": "string",
-                  "example": "Tech"
-                },
-                "contact": {
-                  "type": "string",
-                  "example": "email@example.com"
-                }
-              }
+              "$ref": "#/definitions/Client"
             }
           }
         ],
@@ -104,26 +85,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "industry",
-                "contact"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Client Name"
-                },
-                "industry": {
-                  "type": "string",
-                  "example": "Tech"
-                },
-                "contact": {
-                  "type": "string",
-                  "example": "email@example.com"
-                }
-              }
+              "$ref": "#/definitions/Client"
             }
           }
         ],
@@ -185,31 +147,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "clientId",
-                "status",
-                "dueDate"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Project X"
-                },
-                "clientId": {
-                  "type": "string",
-                  "example": "123abc"
-                },
-                "status": {
-                  "type": "string",
-                  "example": "Active"
-                },
-                "dueDate": {
-                  "type": "string",
-                  "example": "2025-07-15"
-                }
-              }
+              "$ref": "#/definitions/Project"
             }
           }
         ],
@@ -263,31 +201,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "clientId",
-                "status",
-                "dueDate"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Project X"
-                },
-                "clientId": {
-                  "type": "string",
-                  "example": "123abc"
-                },
-                "status": {
-                  "type": "string",
-                  "example": "Active"
-                },
-                "dueDate": {
-                  "type": "string",
-                  "example": "2025-07-15"
-                }
-              }
+              "$ref": "#/definitions/Project"
             }
           }
         ],
@@ -349,26 +263,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "title",
-                "status",
-                "assignedTo"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Task Title"
-                },
-                "status": {
-                  "type": "string",
-                  "example": "Pending"
-                },
-                "assignedTo": {
-                  "type": "string",
-                  "example": "Employee ID"
-                }
-              }
+              "$ref": "#/definitions/Task"
             }
           }
         ],
@@ -422,26 +317,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "title",
-                "status",
-                "assignedTo"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Task Title"
-                },
-                "status": {
-                  "type": "string",
-                  "example": "Pending"
-                },
-                "assignedTo": {
-                  "type": "string",
-                  "example": "Employee ID"
-                }
-              }
+              "$ref": "#/definitions/Task"
             }
           }
         ],
@@ -503,26 +379,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "position",
-                "email"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "John Doe"
-                },
-                "position": {
-                  "type": "string",
-                  "example": "Manager"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "john@example.com"
-                }
-              }
+              "$ref": "#/definitions/Employee"
             }
           }
         ],
@@ -576,26 +433,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "position",
-                "email"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "John Doe"
-                },
-                "position": {
-                  "type": "string",
-                  "example": "Manager"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "john@example.com"
-                }
-              }
+              "$ref": "#/definitions/Employee"
             }
           }
         ],
@@ -691,6 +529,101 @@
       "scopes": {
         "read": "Read access",
         "write": "Write access"
+      }
+    }
+  },
+  "definitions": {
+    "Client": {
+      "type": "object",
+      "required": [
+        "name",
+        "industry",
+        "contact"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Client Name"
+        },
+        "industry": {
+          "type": "string",
+          "example": "Tech"
+        },
+        "contact": {
+          "type": "string",
+          "example": "email@example.com"
+        }
+      }
+    },
+    "Project": {
+      "type": "object",
+      "required": [
+        "name",
+        "clientId",
+        "status",
+        "dueDate"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Project X"
+        },
+        "clientId": {
+          "type": "string",
+          "example": "123abc"
+        },
+        "status": {
+          "type": "string",
+          "example": "Active"
+        },
+        "dueDate": {
+          "type": "string",
+          "example": "2025-07-15"
+        }
+      }
+    },
+    "Task": {
+      "type": "object",
+      "required": [
+        "title",
+        "status",
+        "assignedTo"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Task Title"
+        },
+        "status": {
+          "type": "string",
+          "example": "Pending"
+        },
+        "assignedTo": {
+          "type": "string",
+          "example": "Employee ID"
+        }
+      }
+    },
+    "Employee": {
+      "type": "object",
+      "required": [
+        "name",
+        "position",
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "position": {
+          "type": "string",
+          "example": "Manager"
+        },
+        "email": {
+          "type": "string",
+          "example": "john@example.com"
+        }
       }
     }
   }
