@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "CSE341 Final Project API",
-    "description": "API documentation for Clients, Projects, Employees, and Tasks with full CRUD and validation",
+    "title": "CSE341 Final Project",
+    "description": "API documentation for all collections: clients, projects, tasks, employees, and auth routes",
     "version": "1.0.0"
   },
   "host": "cse341-w05-group.onrender.com",
@@ -11,9 +11,9 @@
     "https"
   ],
   "paths": {
-    "/clients": {
+    "/clients/": {
       "get": {
-        "summary": "Get all clients",
+        "description": "Get all clients",
         "responses": {
           "200": {
             "description": "OK"
@@ -24,24 +24,31 @@
         }
       },
       "post": {
-        "summary": "Create a new client",
+        "description": "Create a new client",
         "parameters": [
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "required": [
                 "name",
-                "email"
+                "industry",
+                "contact"
               ],
               "properties": {
                 "name": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "New Client"
                 },
-                "email": {
-                  "type": "string"
+                "industry": {
+                  "type": "string",
+                  "example": "Technology"
+                },
+                "contact": {
+                  "type": "string",
+                  "example": "contact@example.com"
                 }
               }
             }
@@ -62,7 +69,7 @@
     },
     "/clients/{id}": {
       "get": {
-        "summary": "Get client by ID",
+        "description": "Get client by ID",
         "parameters": [
           {
             "name": "id",
@@ -84,7 +91,7 @@
         }
       },
       "put": {
-        "summary": "Update client by ID",
+        "description": "Update client",
         "parameters": [
           {
             "name": "id",
@@ -93,29 +100,36 @@
             "type": "string"
           },
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "required": [
                 "name",
-                "email"
+                "industry",
+                "contact"
               ],
               "properties": {
                 "name": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "New Client"
                 },
-                "email": {
-                  "type": "string"
+                "industry": {
+                  "type": "string",
+                  "example": "Technology"
+                },
+                "contact": {
+                  "type": "string",
+                  "example": "contact@example.com"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request - Validation Error"
@@ -129,7 +143,7 @@
         }
       },
       "delete": {
-        "summary": "Delete client by ID",
+        "description": "Delete client",
         "parameters": [
           {
             "name": "id",
@@ -139,8 +153,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Deleted"
+          "200": {
+            "description": "OK"
           },
           "404": {
             "description": "Not Found"
@@ -151,9 +165,9 @@
         }
       }
     },
-    "/projects": {
+    "/projects/": {
       "get": {
-        "summary": "Get all projects",
+        "description": "Get all projects",
         "responses": {
           "200": {
             "description": "OK"
@@ -164,24 +178,36 @@
         }
       },
       "post": {
-        "summary": "Create a new project",
+        "description": "Create a new project",
         "parameters": [
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "required": [
-                "title",
-                "clientId"
+                "name",
+                "clientId",
+                "status",
+                "dueDate"
               ],
               "properties": {
-                "title": {
-                  "type": "string"
+                "name": {
+                  "type": "string",
+                  "example": "Website Redesign"
                 },
                 "clientId": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "666abc123def456789000001"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "In Progress"
+                },
+                "dueDate": {
+                  "type": "string",
+                  "example": "2025-07-15"
                 }
               }
             }
@@ -202,7 +228,7 @@
     },
     "/projects/{id}": {
       "get": {
-        "summary": "Get project by ID",
+        "description": "Get project by ID",
         "parameters": [
           {
             "name": "id",
@@ -224,7 +250,7 @@
         }
       },
       "put": {
-        "summary": "Update project by ID",
+        "description": "Update project",
         "parameters": [
           {
             "name": "id",
@@ -233,29 +259,41 @@
             "type": "string"
           },
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "required": [
-                "title",
-                "clientId"
+                "name",
+                "clientId",
+                "status",
+                "dueDate"
               ],
               "properties": {
-                "title": {
-                  "type": "string"
+                "name": {
+                  "type": "string",
+                  "example": "Website Redesign"
                 },
                 "clientId": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "666abc123def456789000001"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "In Progress"
+                },
+                "dueDate": {
+                  "type": "string",
+                  "example": "2025-07-15"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request - Validation Error"
@@ -269,7 +307,7 @@
         }
       },
       "delete": {
-        "summary": "Delete project by ID",
+        "description": "Delete project",
         "parameters": [
           {
             "name": "id",
@@ -279,8 +317,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Deleted"
+          "200": {
+            "description": "OK"
           },
           "404": {
             "description": "Not Found"
@@ -291,9 +329,9 @@
         }
       }
     },
-    "/employees": {
+    "/tasks/": {
       "get": {
-        "summary": "Get all employees",
+        "description": "Get all tasks",
         "responses": {
           "200": {
             "description": "OK"
@@ -304,164 +342,31 @@
         }
       },
       "post": {
-        "summary": "Create a new employee",
+        "description": "Create a new task",
         "parameters": [
           {
-            "in": "body",
             "name": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "position"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request - Validation Error"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/employees/{id}": {
-      "get": {
-        "summary": "Get employee by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "summary": "Update employee by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "name",
-                "position"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request - Validation Error"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete employee by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Deleted"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/tasks": {
-      "get": {
-        "summary": "Get all tasks",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new task",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
             "required": true,
             "schema": {
               "type": "object",
               "required": [
                 "title",
-                "employeeId"
+                "status",
+                "assignedTo"
               ],
               "properties": {
                 "title": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "Design UI"
                 },
-                "employeeId": {
-                  "type": "string"
+                "status": {
+                  "type": "string",
+                  "example": "In Progress"
+                },
+                "assignedTo": {
+                  "type": "string",
+                  "example": "Employee ID"
                 }
               }
             }
@@ -482,7 +387,7 @@
     },
     "/tasks/{id}": {
       "get": {
-        "summary": "Get task by ID",
+        "description": "Get task by ID",
         "parameters": [
           {
             "name": "id",
@@ -504,7 +409,7 @@
         }
       },
       "put": {
-        "summary": "Update task by ID",
+        "description": "Update task",
         "parameters": [
           {
             "name": "id",
@@ -513,29 +418,36 @@
             "type": "string"
           },
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "required": [
                 "title",
-                "employeeId"
+                "status",
+                "assignedTo"
               ],
               "properties": {
                 "title": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "Design UI"
                 },
-                "employeeId": {
-                  "type": "string"
+                "status": {
+                  "type": "string",
+                  "example": "In Progress"
+                },
+                "assignedTo": {
+                  "type": "string",
+                  "example": "Employee ID"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request - Validation Error"
@@ -549,7 +461,7 @@
         }
       },
       "delete": {
-        "summary": "Delete task by ID",
+        "description": "Delete task",
         "parameters": [
           {
             "name": "id",
@@ -559,8 +471,162 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/employees/": {
+      "get": {
+        "description": "Get all employees",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new employee",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "position",
+                "email"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Alice"
+                },
+                "position": {
+                  "type": "string",
+                  "example": "Developer"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "alice@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request - Validation Error"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/employees/{id}": {
+      "get": {
+        "description": "Get employee by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "Update employee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "position",
+                "email"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Alice"
+                },
+                "position": {
+                  "type": "string",
+                  "example": "Developer"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "alice@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
           "204": {
-            "description": "Deleted"
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request - Validation Error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete employee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "404": {
             "description": "Not Found"
@@ -573,17 +639,40 @@
     },
     "/protected": {
       "get": {
-        "summary": "Protected route (OAuth)",
-        "description": "Requires OAuth login",
+        "description": "Protected route",
         "responses": {
           "200": {
-            "description": "OK - Authenticated"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "description": "Initiate Google OAuth",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "description": "Google OAuth Callback",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "description": "Logout",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
