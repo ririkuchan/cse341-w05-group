@@ -72,7 +72,7 @@ app.get('/protected', (req, res) => {
     }
 });
 
-// === テスト環境では listen しない ===
+// === 通常起動（npm startなど）の場合のみ listen
 if (require.main === module) {
     mongodb.initDb((err) => {
         if (err) {
@@ -81,6 +81,17 @@ if (require.main === module) {
             app.listen(port, () => {
                 console.log(`✅ Database is connected. Server is running on port ${port}`);
             });
+        }
+    });
+}
+
+// === テストなどでrequireされた場合にもDB初期化（listenは不要）
+else {
+    mongodb.initDb((err) => {
+        if (err) {
+            console.error('❌ Failed to initialize DB in test mode:', err);
+        } else {
+            console.log('✅ Database initialized for testing.');
         }
     });
 }
