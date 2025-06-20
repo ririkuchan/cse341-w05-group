@@ -2,10 +2,10 @@
   "swagger": "2.0",
   "info": {
     "title": "CSE341 Final Project API",
-    "description": "API documentation for Clients, Projects, Employees, and Tasks with error handling",
+    "description": "API documentation for Clients, Projects, Employees, and Tasks with full CRUD and validation",
     "version": "1.0.0"
   },
-  "host": "https://cse341-w05-group.onrender.com",
+  "host": "cse341-w05-group.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
@@ -25,17 +25,6 @@
       },
       "post": {
         "summary": "Create a new client",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request - Validation Error"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
         "parameters": [
           {
             "in": "body",
@@ -57,7 +46,18 @@
               }
             }
           }
-        ]
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request - Validation Error"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/clients/{id}": {
@@ -165,17 +165,6 @@
       },
       "post": {
         "summary": "Create a new project",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request - Validation Error"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
         "parameters": [
           {
             "in": "body",
@@ -197,7 +186,18 @@
               }
             }
           }
-        ]
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request - Validation Error"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/projects/{id}": {
@@ -305,17 +305,6 @@
       },
       "post": {
         "summary": "Create a new employee",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request - Validation Error"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
         "parameters": [
           {
             "in": "body",
@@ -337,7 +326,18 @@
               }
             }
           }
-        ]
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request - Validation Error"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/employees/{id}": {
@@ -445,17 +445,6 @@
       },
       "post": {
         "summary": "Create a new task",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request - Validation Error"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
         "parameters": [
           {
             "in": "body",
@@ -477,7 +466,18 @@
               }
             }
           }
-        ]
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request - Validation Error"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/tasks/{id}": {
