@@ -11,8 +11,15 @@ const getAllTasks = async (req, res) => {
 };
 
 const getTaskById = async (req, res) => {
+    const id = req.params.id;
+
+    // 🔐 ObjectIdとして有効か事前にチェック
+    if (!ObjectId.isValid(id)) {
+        return res.status(404).json({ message: 'Invalid task ID format' });
+    }
+
     try {
-        const task = await getDb().collection('tasks').findOne({ _id: new ObjectId(req.params.id) });
+        const task = await getDb().collection('tasks').findOne({ _id: new ObjectId(id) });
         if (!task) {
             return res.status(404).json({ message: 'Task not found' });
         }

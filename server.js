@@ -14,16 +14,11 @@ const MongoStore = require('connect-mongo');
 
 const clientsRoutes = require('./routes/clients');
 const projectsRoutes = require('./routes/projects');
-const tasksRoutes = require('./routes/tasks');         // ← 追加
-const employeesRoutes = require('./routes/employees'); // ← 追加
+const tasksRoutes = require('./routes/tasks');
+const employeesRoutes = require('./routes/employees');
 
 const app = express();
 const port = process.env.PORT || 3001;
-
-
-app.listen(port, () => {
-    console.log(`✅ Database is connected. Server is running on port ${port}`);
-});
 
 app.set('trust proxy', 1);
 app.use(bodyParser.json());
@@ -65,8 +60,8 @@ app.use(passport.session());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/clients', clientsRoutes);
 app.use('/projects', projectsRoutes);
-app.use('/tasks', tasksRoutes);         // ← 追加
-app.use('/employees', employeesRoutes); // ← 追加
+app.use('/tasks', tasksRoutes);
+app.use('/employees', employeesRoutes);
 app.use('/auth', require('./routes/auth'));
 
 app.get('/protected', (req, res) => {
@@ -77,13 +72,17 @@ app.get('/protected', (req, res) => {
     }
 });
 
-// === MongoDB接続後にlisten ===
-mongodb.initDb((err) => {
-    if (err) {
-        console.error('❌ Failed to connect to database:', err);
-    } else {
-        app.listen(port, () => {
-            console.log(`✅ Database is connected. Server is running on port ${port}`);
-        });
-    }
-});
+// === テスト環境では listen しない ===
+if (require.main === module) {
+    mongodb.initDb((err) => {
+        if (err) {
+            console.error('❌ Failed to connect to database:', err);
+        } else {
+            app.listen(port, () => {
+                console.log(`✅ Database is connected. Server is running on port ${port}`);
+            });
+        }
+    });
+}
+
+module.exports = app;
