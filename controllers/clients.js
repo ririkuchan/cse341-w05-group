@@ -1,18 +1,27 @@
+// controllers/clients.js
 const { ObjectId } = require('mongodb');
-const { getDb } = require('../data/database'); // ✅ 必ず {} で取得していることもOK！
+const { getDb } = require('../data/database');
 
+// Get all clients
 const getAllClients = async (req, res) => {
     try {
-        const clients = await getDb().collection('clients').find().toArray(); // ✅ 修正
+        const clients = await getDb().collection('clients').find().toArray();
         res.status(200).json(clients);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching clients', error });
     }
 };
 
+// Get client by ID
 const getClientById = async (req, res) => {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+        return res.status(404).json({ message: 'Invalid client ID format' });
+    }
+
     try {
-        const client = await getDb().collection('clients').findOne({ _id: new ObjectId(req.params.id) });
+        const client = await getDb().collection('clients').findOne({ _id: new ObjectId(id) });
         if (!client) {
             return res.status(404).json({ message: 'Client not found' });
         }
@@ -22,6 +31,7 @@ const getClientById = async (req, res) => {
     }
 };
 
+// Create a new client
 const createClient = async (req, res) => {
     try {
         const client = {
@@ -42,6 +52,7 @@ const createClient = async (req, res) => {
     }
 };
 
+// Update a client by ID
 const updateClient = async (req, res) => {
     try {
         const client = req.body;
@@ -58,6 +69,7 @@ const updateClient = async (req, res) => {
     }
 };
 
+// Delete a client by ID
 const deleteClient = async (req, res) => {
     try {
         const result = await getDb().collection('clients').deleteOne({ _id: new ObjectId(req.params.id) });
