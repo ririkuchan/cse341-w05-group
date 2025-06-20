@@ -5,9 +5,13 @@ const { getDb } = require('../data/database');
 // Get all clients
 const getAllClients = async (req, res) => {
     try {
-        const clients = await getDb().collection('clients').find().toArray();
+        const db = getDb();
+        console.log("✅ DB instance in getAllClients:", db);
+        const clients = await db.collection('clients').find().toArray();
+        console.log("✅ clients fetched:", clients);
         res.status(200).json(clients);
     } catch (error) {
+        console.error('❌ Error in getAllClients:', error);
         res.status(500).json({ message: 'Error fetching clients', error });
     }
 };
