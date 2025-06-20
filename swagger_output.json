@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "CSE341 W05 Project",
-    "description": "API documentation for clients and projects",
+    "description": "API documentation for clients, projects, tasks, and employees",
     "version": "1.0.0"
   },
   "host": "cse341-w05-group.onrender.com",
@@ -11,22 +11,18 @@
     "https"
   ],
   "paths": {
-    "/protected": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/clients/": {
       "get": {
-        "description": "",
+        "description": "Get all clients",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -34,7 +30,7 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a new client",
         "parameters": [
           {
             "name": "body",
@@ -71,6 +67,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -79,7 +78,7 @@
     },
     "/clients/{id}": {
       "get": {
-        "description": "",
+        "description": "Get client by ID",
         "parameters": [
           {
             "name": "id",
@@ -92,6 +91,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -101,7 +103,7 @@
         }
       },
       "put": {
-        "description": "Update a client",
+        "description": "Update client",
         "parameters": [
           {
             "name": "id",
@@ -123,15 +125,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Updated Client"
+                  "example": "New Client"
                 },
                 "industry": {
                   "type": "string",
-                  "example": "Finance"
+                  "example": "Technology"
                 },
                 "contact": {
                   "type": "string",
-                  "example": "updated@example.com"
+                  "example": "contact@example.com"
                 }
               }
             }
@@ -140,6 +142,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -150,7 +155,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete client",
         "parameters": [
           {
             "name": "id",
@@ -163,6 +168,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -174,10 +182,16 @@
     },
     "/projects/": {
       "get": {
-        "description": "",
+        "description": "Get all projects",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -185,7 +199,7 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a new project",
         "parameters": [
           {
             "name": "body",
@@ -227,6 +241,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -235,7 +252,7 @@
     },
     "/projects/{id}": {
       "get": {
-        "description": "",
+        "description": "Get project by ID",
         "parameters": [
           {
             "name": "id",
@@ -248,6 +265,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -257,7 +277,7 @@
         }
       },
       "put": {
-        "description": "Update a project",
+        "description": "Update project",
         "parameters": [
           {
             "name": "id",
@@ -280,7 +300,7 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Updated Project"
+                  "example": "Website Redesign"
                 },
                 "clientId": {
                   "type": "string",
@@ -288,11 +308,11 @@
                 },
                 "status": {
                   "type": "string",
-                  "example": "Completed"
+                  "example": "In Progress"
                 },
                 "dueDate": {
                   "type": "string",
-                  "example": "2025-12-01"
+                  "example": "2025-07-15"
                 }
               }
             }
@@ -301,6 +321,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -311,7 +334,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete project",
         "parameters": [
           {
             "name": "id",
@@ -323,6 +346,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -340,6 +366,12 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -354,6 +386,11 @@
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "title",
+                "status",
+                "assignedTo"
+              ],
               "properties": {
                 "title": {
                   "type": "string",
@@ -378,6 +415,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -398,6 +438,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -422,14 +465,19 @@
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "title",
+                "status",
+                "assignedTo"
+              ],
               "properties": {
                 "title": {
                   "type": "string",
-                  "example": "Update UI"
+                  "example": "Design UI"
                 },
                 "status": {
                   "type": "string",
-                  "example": "Done"
+                  "example": "In Progress"
                 },
                 "assignedTo": {
                   "type": "string",
@@ -442,6 +490,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -465,6 +516,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -481,6 +535,12 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -495,6 +555,11 @@
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "position",
+                "email"
+              ],
               "properties": {
                 "name": {
                   "type": "string",
@@ -519,6 +584,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -539,6 +607,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -563,18 +634,23 @@
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "position",
+                "email"
+              ],
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Bob"
+                  "example": "Alice"
                 },
                 "position": {
                   "type": "string",
-                  "example": "Manager"
+                  "example": "Developer"
                 },
                 "email": {
                   "type": "string",
-                  "example": "bob@example.com"
+                  "example": "alice@example.com"
                 }
               }
             }
@@ -583,6 +659,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -606,41 +685,14 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/auth/google": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/google/callback": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
