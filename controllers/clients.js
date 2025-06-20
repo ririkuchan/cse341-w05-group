@@ -7,8 +7,14 @@ const getAllClients = async (req, res) => {
     try {
         const db = getDb();
         console.log("✅ DB instance in getAllClients:", db);
+
+        if (!db || typeof db.collection !== 'function') {
+            console.error('❌ getDb() returned invalid object:', db);
+        }
+
         const clients = await db.collection('clients').find().toArray();
         console.log("✅ clients fetched:", clients);
+
         res.status(200).json(clients);
     } catch (error) {
         console.error('❌ Error in getAllClients:', error);
