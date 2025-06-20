@@ -5,11 +5,9 @@ const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger_output.json');
-
 const session = require('express-session');
 const passport = require('passport');
 require('./config/passport');
-
 const MongoStore = require('connect-mongo');
 
 const clientsRoutes = require('./routes/clients');
@@ -20,40 +18,21 @@ const employeesRoutes = require('./routes/employees');
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.set('trust proxy', 1);
 app.use(bodyParser.json());
-
-// === CORS対応 ===
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Z-Key'
-    );
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET, POST, PUT, DELETE, OPTIONS'
-    );
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     next();
 });
 
-// === Session設定 ===
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URL,
-            collectionName: 'sessions',
-        }),
-        cookie: {
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none'
-        },
-    })
-);
-
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL, collectionName: 'sessions' }),
+    cookie: { secure: process.env.NODE_ENV === 'production', sameSite: 'none' }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -72,25 +51,15 @@ app.get('/protected', (req, res) => {
     }
 });
 
-// ✅ テスト時でもDBを初期化
 if (require.main === module) {
     mongodb.initDb((err) => {
         if (err) {
             console.error('❌ Failed to connect to database:', err);
-        } else {
-            app.listen(port, () => {
-                console.log(`✅ Database is connected. Server is running on port ${port}`);
-            });
+            process.exit(1);
         }
-    });
-} else {
-    // Jestなどから `require()` されたときにもDB初期化
-    mongodb.initDb((err) => {
-        if (err) {
-            console.error('❌ Test DB initialization failed:', err);
-        } else {
-            console.log('✅ Database initialized for testing.');
-        }
+        app.listen(port, () => {
+            console.log(`✅ Server running on port ${port}`);
+        });
     });
 }
 

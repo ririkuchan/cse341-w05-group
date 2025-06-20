@@ -1,34 +1,33 @@
 const { MongoClient } = require('mongodb');
+const connectionString = process.env.MONGODB_URL;
 
-console.log('MONGODB_URL:', process.env.MONGODB_URL);
-
-const client = new MongoClient(process.env.MONGODB_URL);
+let client;
 let database;
 
-const initDb = async (callback) => {
+async function initDb(callback) {
     if (database) {
-        console.log('Db is already initialized!');
+        console.log('✅ Database already initialized.');
         return callback(null, database);
     }
 
     try {
-        console.log('Connecting to MongoDB...');
+        client = new MongoClient(connectionString);
         await client.connect();
-        database = client.db('contacts'); // ✅ DB name confirmed
-        console.log('✅ Database connected');
+        database = client.db('projectDB');
+        console.log('✅ Database initialized for testing.');
         callback(null, database);
     } catch (err) {
-        console.error('❌ Database connection error:', err);
+        console.error('❌ Error initializing database:', err);
         callback(err);
     }
-};
+}
 
-const getDb = () => {
+function getDb() {
     if (!database) {
-        throw new Error('❌ Database not initialized');
+        throw Error('❌ Database not initialized');
     }
     return database;
-};
+}
 
 module.exports = {
     initDb,

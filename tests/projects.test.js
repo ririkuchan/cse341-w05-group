@@ -1,5 +1,8 @@
 const request = require('supertest');
 const app = require('../server');
+const db = require('../data/database');
+
+beforeAll(done => db.initDb(err => done(err)));
 
 describe('Projects API', () => {
     test('GET /projects should return 200 and array', async () => {
@@ -13,8 +16,4 @@ describe('Projects API', () => {
         const res = await request(app).get(`/projects/${id}`);
         expect([200, 404]).toContain(res.statusCode);
     });
-});
-
-afterAll(async () => {
-    await new Promise(resolve => setTimeout(() => resolve(), 500)); // 500ms待ってJestを強制終了させないようにする
 });
