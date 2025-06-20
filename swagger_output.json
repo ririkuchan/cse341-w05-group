@@ -41,7 +41,12 @@
                 "contact": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "industry",
+                "contact"
+              ]
             }
           }
         ],
@@ -50,10 +55,10 @@
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       }
@@ -105,7 +110,12 @@
                 "contact": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "industry",
+                "contact"
+              ]
             }
           }
         ],
@@ -114,13 +124,13 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "404": {
             "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       },
@@ -180,7 +190,13 @@
                 "dueDate": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "clientId",
+                "status",
+                "dueDate"
+              ]
             }
           }
         ],
@@ -189,10 +205,10 @@
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       }
@@ -247,7 +263,13 @@
                 "dueDate": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "clientId",
+                "status",
+                "dueDate"
+              ]
             }
           }
         ],
@@ -256,13 +278,13 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "404": {
             "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       },
@@ -319,7 +341,12 @@
                 "assignedTo": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "title",
+                "status",
+                "assignedTo"
+              ]
             }
           }
         ],
@@ -328,10 +355,10 @@
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       }
@@ -383,7 +410,12 @@
                 "assignedTo": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "title",
+                "status",
+                "assignedTo"
+              ]
             }
           }
         ],
@@ -392,13 +424,13 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "404": {
             "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       },
@@ -455,7 +487,12 @@
                 "email": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "position",
+                "email"
+              ]
             }
           }
         ],
@@ -464,10 +501,10 @@
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       }
@@ -519,7 +556,12 @@
                 "email": {
                   "example": "any"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "position",
+                "email"
+              ]
             }
           }
         ],
@@ -528,13 +570,13 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Validation Error"
           },
           "404": {
             "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error - Validation Failed"
           }
         }
       },
