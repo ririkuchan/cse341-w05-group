@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "CSE341 Final Project API",
-    "description": "CRUD API for Clients, Projects, Tasks, Employees with OAuth",
+    "description": "API for managing clients, projects, tasks, and employees",
     "version": "1.0.0"
   },
   "host": "cse341-w05-group.onrender.com",
@@ -13,7 +13,7 @@
   "paths": {
     "/clients/": {
       "get": {
-        "description": "Get all clients",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -24,7 +24,7 @@
         }
       },
       "post": {
-        "description": "Create new client",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -60,7 +60,7 @@
     },
     "/clients/{id}": {
       "get": {
-        "description": "Get client by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -82,7 +82,7 @@
         }
       },
       "put": {
-        "description": "Update client",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -125,7 +125,7 @@
         }
       },
       "delete": {
-        "description": "Delete client",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -149,7 +149,7 @@
     },
     "/projects/": {
       "get": {
-        "description": "Get all projects",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -160,7 +160,7 @@
         }
       },
       "post": {
-        "description": "Create new project",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -199,7 +199,7 @@
     },
     "/projects/{id}": {
       "get": {
-        "description": "Get project by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -221,7 +221,7 @@
         }
       },
       "put": {
-        "description": "Update project",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -267,7 +267,7 @@
         }
       },
       "delete": {
-        "description": "Delete project",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -291,7 +291,7 @@
     },
     "/tasks/": {
       "get": {
-        "description": "Get all tasks",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -302,7 +302,7 @@
         }
       },
       "post": {
-        "description": "Create new task",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -338,7 +338,7 @@
     },
     "/tasks/{id}": {
       "get": {
-        "description": "Get task by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -360,7 +360,7 @@
         }
       },
       "put": {
-        "description": "Update task",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -403,7 +403,7 @@
         }
       },
       "delete": {
-        "description": "Delete task",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -427,7 +427,7 @@
     },
     "/employees/": {
       "get": {
-        "description": "Get all employees",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -438,7 +438,7 @@
         }
       },
       "post": {
-        "description": "Create new employee",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -474,7 +474,7 @@
     },
     "/employees/{id}": {
       "get": {
-        "description": "Get employee by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -496,7 +496,7 @@
         }
       },
       "put": {
-        "description": "Update employee",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -539,7 +539,7 @@
         }
       },
       "delete": {
-        "description": "Delete employee",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -557,46 +557,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/auth/google": {
-      "get": {
-        "description": "Initiate Google OAuth",
-        "responses": {
-          "302": {
-            "description": "Redirect to Google Login"
-          }
-        }
-      }
-    },
-    "/auth/google/callback": {
-      "get": {
-        "description": "Google OAuth Callback",
-        "responses": {
-          "200": {
-            "description": "Authenticated"
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "description": "Logout user",
-        "responses": {
-          "200": {
-            "description": "Logged out"
-          }
-        }
-      }
-    },
-    "/protected": {
-      "get": {
-        "description": "Protected route",
-        "responses": {
-          "200": {
-            "description": "Access granted"
           }
         }
       }
