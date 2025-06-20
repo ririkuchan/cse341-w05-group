@@ -28,7 +28,6 @@ const getProjectById = async (req, res) => {
         res.status(500).json({ message: 'Error fetching project', error: err });
     }
 };
-;
 
 const createProject = async (req, res) => {
     try {
