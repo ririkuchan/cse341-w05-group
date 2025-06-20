@@ -38,7 +38,65 @@ const getProjectById = async (req, res) => {
     }
 };
 
+const createProject = async (req, res) => {
+    try {
+        const project = {
+            title: req.body.title,
+            description: req.body.description,
+            deadline: req.body.deadline
+        };
+        const result = await getDb().collection('projects').insertOne(project);
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(500).json({ message: 'Error creating project', error: err });
+    }
+};
+
+const updateProject = async (req, res) => {
+    try {
+        const id = req.params.id;
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid ID format' });
+        }
+
+        const result = await getDb().collection('projects').replaceOne(
+            { _id: new ObjectId(id) },
+            req.body
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        res.status(204).send();
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating project', error: err });
+    }
+};
+
+const deleteProject = async (req, res) => {
+    try {
+        const id = req.params.id;
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid ID format' });
+        }
+
+        const result = await getDb().collection('projects').deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        res.status(200).json({ message: 'Project deleted' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error deleting project', error: err });
+    }
+};
+
 module.exports = {
     getAllProjects,
-    getProjectById
+    getProjectById,
+    createProject,
+    updateProject,
+    deleteProject
 };
